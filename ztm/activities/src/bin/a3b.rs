@@ -9,4 +9,15 @@
 // * Use an if..else if..else block to determine which message to display
 // * Use the println macro to display messages to the terminal
 
-fn main() {}
+fn main() {
+    let var = 5;
+    if var > 5 {
+        println!(">5")
+    }
+    else if var < 5 {
+        println!("<5")
+    }
+    else {
+        println!("=5")
+    }
+}
