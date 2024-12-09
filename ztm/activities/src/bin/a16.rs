@@ -11,4 +11,19 @@
 // * Use a struct containing the student's name and locker assignment
 // * The locker assignment should use an Option<i32>
 
-fn main() {}
+struct Student {
+    locker: Option<i32>,
+    name: String
+}
+
+fn main() {
+    let student1 = Student{
+        locker: Some(23),
+        name: "JAy".to_owned()
+    };
+    println!("Student: {:?}", student1.name);
+    match student1.locker {
+        Some(locker) => println!("Locker: {:?}", locker),
+        None => println!("Locker: None")
+    }
+}

@@ -11,4 +11,37 @@
 // * Return a result from the function
 // * The Err variant should detail the reason why they cannot make a purchase
 
-fn main() {}
+struct Customer {
+    name: String,
+    age: i32
+}
+
+impl Customer {
+    fn new(name: String,age: i32) -> Self {
+        Self {
+            name,
+            age
+        }
+    }
+
+    fn check_purchase(&self) -> Result<Self,String> {
+        if self.age >= 21 {
+            Ok(Self{
+                name: self.name.clone(),
+                age: self.age
+            })
+        }else{
+            Err("You are not up to 21".to_owned())
+        }
+    }
+
+}
+
+fn main() {
+    let customer = Customer::new("prince".to_owned(), 20);
+    match customer.check_purchase() {
+        Ok(_) => println!("You can make a purchase"),
+        Err(e) => println!("Error: {}", e)
+    }
+
+}

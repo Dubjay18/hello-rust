@@ -22,4 +22,54 @@
 // * Print whether the employee may access the building
 //   * Must use a function that utilizes the question mark operator to do this
 
-fn main() {}
+enum Role {
+    Maintenance,
+    Marketing,
+    Manager,
+    LineSupervisor,
+    KitchenStaff,
+    AssemblyTechnician
+}
+
+struct Employee {
+    role: Role,
+    employed: bool
+}
+impl Employee {
+    fn new(role: Role, employed: bool) -> Self {
+        Self {
+            role,
+            employed
+        }
+    }
+    fn access_building(&self) -> Result<(),String> {
+        match self.role {
+            Role::Maintenance | Role::Marketing | Role::Manager => {
+                if self.employed {
+                    Ok(())
+                }else{
+                    Err("You are terminated".to_owned())
+                }
+            },
+            _ => {
+                Err("You are not allowed".to_owned())
+            }
+        }
+    }
+}
+
+
+
+fn main() {
+    let employee = Employee::new(Role::Maintenance, true);
+    match employee.access_building() {
+        Ok(_) => println!("You can access the building"),
+        Err(e) => println!("Error: {}", e)
+    }
+
+    let terminated_employee = Employee::new(Role::LineSupervisor, false);
+    match terminated_employee.access_building() {
+        Ok(_) => println!("You can access the building"),
+        Err(e) => println!("Error: {}", e)
+    }
+}
