@@ -32,3 +32,32 @@ fn concat(first: &str, second: &str) -> String {
 }
 
 fn main() {}
+
+#[cfg(test)]
+mod test {
+    use crate::*;
+
+    #[test]
+    fn test_clamp() {
+        let result = clamp(9,2,5);
+        let result2 = clamp(1,2,5);
+        assert_eq!(result, 5);
+        assert_eq!(result2, 2);
+    }
+
+    #[test]
+    fn test_div() {
+        let result = div(10,2);
+        let result2 = div(10,0);
+        assert_eq!(result, Some(5));
+        assert_eq!(result2, None);
+    }
+
+    #[test]
+    fn test_concat() {
+        let result = concat("Hello", "World");
+        let result2 = concat("Goodbye", "World");
+        assert_eq!(result, "Hello World");
+        assert_eq!(result2, "Goodbye World");
+    }
+}

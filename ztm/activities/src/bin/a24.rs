@@ -9,5 +9,10 @@
 // * Use an iterator chain to accomplish the task.
 
 fn main() {
+
     let data = vec![1, 2, 3, 4, 5];
+    let trip_data: Vec<i32> = data.iter().map(|x| x * 3).filter(|&x| x > 10).collect();
+    for x in trip_data {
+        println!("{}", x);
+    }
 }
