@@ -1,3 +1,4 @@
+use chrono::prelude::*;
 // Topic: External crates
 //
 // Requirements:
@@ -8,4 +9,7 @@
 // * (OPTIONAL) Read the documentation section `Formatting and Parsing`
 //   for examples on how to create custom time formats
 
-fn main() {}
+fn main() {
+    let local: DateTime<Local> = Local::now();
+    println!("Local time: {}", local.format("%Y-%m-%d %H:%M:%S").to_string());
+}

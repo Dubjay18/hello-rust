@@ -29,4 +29,123 @@
 // * A vector is the easiest way to store the bills at stage 1, but a
 //   hashmap will be easier to work with at stages 2 and 3.
 
-fn main() {}
+struct Bill {
+    name: String,
+    amount: f64,
+}
+
+struct BillManager {
+    store: Vec<Bill>,
+}
+
+impl BillManager {
+    fn new() -> Self {
+        BillManager {
+            store: vec![],
+        }
+    }
+
+    fn add_to_store(&mut self, bill: Bill) {
+        self.store.push(bill);
+    }
+
+    fn remove_from_store(&mut self, name: &str) {
+        self.store.retain(|bill| bill.name != name);
+    }
+    fn add_bill(&mut self, name: &str, amount: f64) {
+        let bill = Bill {
+            name: name.to_string(),
+            amount,
+        };
+        self.add_to_store(bill);
+    }
+
+    fn view_bills(&self) {
+        for bill in &self.store {
+            println!("{}: ${}", bill.name, bill.amount);
+        }
+    }
+
+    fn remove_bill(&mut self, name: &str) {
+        self.remove_from_store(name);
+    }
+
+    fn edit_bill(&mut self, name: &str, amount: f64) {
+        for bill in &mut self.store {
+            if bill.name == name {
+                bill.amount = amount;
+            }
+        }
+    }
+}
+
+
+
+fn main() {
+    println!("Bill Manager");
+    let mut manager = BillManager::new();
+    loop {
+        println!("Menu:");
+        println!("1. Add bill");
+        println!("2. View bills");
+        println!("3. Remove bill");
+        println!("4. Edit bill");
+        println!("5. Exit");
+        println!("Enter the number of your choice:");
+        let mut choice = String::new();
+        std::io::stdin().read_line(&mut choice).expect("Failed to read line");
+        let choice: u32 = match choice.trim().parse() {
+            Ok(num) => num,
+            Err(_) => {
+                println!("Invalid choice");
+                continue;
+            }
+        };
+        match choice {
+            1 => {
+                println!("Enter bill name:");
+                let mut name = String::new();
+                std::io::stdin().read_line(&mut name).expect("Failed to read line");
+                let name = name.trim();
+                println!("Enter bill amount:");
+                let mut amount = String::new();
+                std::io::stdin().read_line(&mut amount).expect("Failed to read line");
+                let amount: f64 = match amount.trim().parse() {
+                    Ok(num) => num,
+                    Err(_) => {
+                        println!("Invalid amount");
+                        continue;
+                    }
+                };
+                manager.add_bill(name, amount);
+            }
+            2 => manager.view_bills(),
+            3 => {
+                println!("Enter bill name:");
+                let mut name = String::new();
+                std::io::stdin().read_line(&mut name).expect("Failed to read line");
+                let name = name.trim();
+                manager.remove_bill(name);
+            },
+            4 => {
+                println!("Enter bill name:");
+                let mut name = String::new();
+                std::io::stdin().read_line(&mut name).expect("Failed to read line");
+                let name = name.trim();
+                println!("Enter new bill amount:");
+                let mut amount = String::new();
+                std::io::stdin().read_line(&mut amount).expect("Failed to read line");
+                let amount: f64 = match amount.trim().parse() {
+                    Ok(num) => num,
+                    Err(_) => {
+                        println!("Invalid amount");
+                        continue;
+                    }
+                };
+                manager.edit_bill(name, amount);
+            },
+            5 => break,
+            _ => {}
+        }
+    }
+}
